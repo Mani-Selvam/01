@@ -10,13 +10,12 @@ import { environment } from '../../environment/environment';
   providedIn: 'root'
 })
 export class CrudserviceService {
-  apiRoot = environment.apiRoot
+  apiRoot: string;
    token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjVhOWVhNzFjMmY3M2YxZTIyZjc2Y2EyIiwiaWF0IjoxNzA1NjM0NTk5LCJleHAiOjE3MzcxNzA1OTl9.NhEcTes1GLmy-SQEaA8HZoYK7VP7DWoHOFxWd1zTeCU';
    userId = '22';
   url: any;
   constructor( private http: HttpClient ) {
-    console.log("fsfsersdrse");
-    
+    this.apiRoot = typeof environment.apiRoot === 'function' ? environment.apiRoot() : environment.apiRoot;
   }
 
   getAllUser(){
