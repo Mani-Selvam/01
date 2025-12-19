@@ -17,3 +17,7 @@ build/
 .idea/
 .vscode/
 Thumbs.db
+
+
+config/service-account.json
+config/*.json
