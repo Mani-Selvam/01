@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 const cors = require('cors')
-const port = process.env.PORT || 5000;  
 const config = require('./config/config.js');
+const port = process.env.PORT || config.port;
 const middleware = require('./middleware/middleware.js');
 const connectDb = require('./config/db.js');
 const dotenv = require("dotenv");
