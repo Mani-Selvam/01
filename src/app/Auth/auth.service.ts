@@ -1,6 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { environment } from '../../environment/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -9,7 +13,7 @@ export class AuthService {
   isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
   usertoken: any;
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
+  constructor(@Inject(DOCUMENT) private document: Document, private http: HttpClient) {
     this.checkAuthenticationStatus();
   }
 
@@ -25,23 +29,44 @@ export class AuthService {
     }
   }
 
-  login(username: string, password: string): Observable<boolean> {
-    if (username === 'Admin' && password === 'Admin@123') {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjVhOWVhNzFjMmY3M2YxZTIyZjc2Y2EyIiwiaWF0IjoxNzA1NjM0NTk5LCJleHAiOjE3MzcxNzA1OTl9.NhEcTes1GLmy-SQEaA8HZoYK7VP7DWoHOFxWd1zTeCU';
-      const userId = '22';
-      localStorage.setItem('token', JSON.stringify(token));
-      localStorage.setItem('userId', JSON.stringify(userId));
-      this.isAuthenticatedSubject.next(true);
-      return of(true); // Return a synchronous observable
-    } else {
-      this.isAuthenticatedSubject.next(false);
-      return of(false); // Return a synchronous observable
-    }
+  login(email: string, password: string): Observable<boolean> {
+    const loginUrl = `${environment.apiRoot}auth/login`;
+    const loginData = {
+      email_mob: email,
+      password: password
+    };
+
+    return this.http.post<any>(loginUrl, loginData).pipe(
+      map(response => {
+        console.log("Login response:", response);
+        if (response && response.data && response.data.token) {
+          const token = response.data.token;
+          const userId = response.data._id;
+          const localStorage = this.document.defaultView?.localStorage;
+          if (localStorage) {
+            localStorage.setItem('token', JSON.stringify(token));
+            localStorage.setItem('userId', JSON.stringify(userId));
+            this.usertoken = token;
+            this.isAuthenticatedSubject.next(true);
+          }
+          return true;
+        }
+        return false;
+      }),
+      catchError(error => {
+        console.error("Login error:", error);
+        this.isAuthenticatedSubject.next(false);
+        return of(false);
+      })
+    );
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
+    const localStorage = this.document.defaultView?.localStorage;
+    if (localStorage) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+    }
     this.isAuthenticatedSubject.next(false);
   }
 
