@@ -1,5 +1,5 @@
 export const environment = {
-    apiRoot : 'http://localhost:3001/', //local dev
+    apiRoot : '/api/', //Replit proxy
     paginatorValue:[10,25,50],
   }
 
