@@ -1,0 +1,23 @@
+# Node.js dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+
+# Build output
+dist/
+build/
+
+# OS and editor-specific files
+.DS_Store
+.idea/
+.vscode/
+Thumbs.db
+
+
+config/service-account.json
+config/*.json
