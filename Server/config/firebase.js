@@ -1,8 +1,20 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('../config/service-account.json');
+const fs = require('fs');
+const path = require('path');
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+const serviceAccountPath = path.join(__dirname, 'service-account.json');
 
-module.exports = admin;
+let adminModule = null;
+
+if (fs.existsSync(serviceAccountPath)) {
+  const serviceAccount = require('./service-account.json');
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+  adminModule = admin;
+} else {
+  console.log('Firebase service account not found - Firebase features will be disabled');
+  adminModule = null;
+}
+
+module.exports = adminModule;

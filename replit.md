@@ -1,24 +1,45 @@
 # Enquiry Admin
 
 ## Overview
-An Angular 17-based admin dashboard application for managing enquiries. Built with PrimeNG UI components and connects to an external backend API.
+A full-stack admin dashboard for managing enquiries with user authentication, plans, coupons, and ticketing system.
 
 ## Project Structure
-- `/src` - Angular frontend source code
-  - `/app/Auth` - Authentication components
+- `/src` - Angular 17 frontend
+  - `/app/Auth` - Authentication components (login, auth guard)
   - `/app/layout` - Layout components (header, sidebar, main)
-  - `/app/Master` - Main feature components (dashboard, users, coupons, plans, etc.)
-- `/Server` - Node.js/Express backend (uses external MongoDB)
+  - `/app/Master` - Feature components (dashboard, users, coupons, plans, tickets, etc.)
+- `/Server` - Node.js/Express backend
+  - `/config` - Database & configuration setup
+  - `/controller` - Request handlers
+  - `/models` - MongoDB schemas
+  - `/services` - Business logic
+  - `/router` - API routes
+  - `/middleware` - Auth & request processing
 
 ## Tech Stack
-- **Frontend**: Angular 17, PrimeNG 17, PrimeFlex, SCSS
-- **Backend**: Node.js/Express with MongoDB (external API)
-- **UI Components**: PrimeNG tables, forms, dialogs
+- **Frontend**: Angular 17, PrimeNG 17, RxJS, SCSS
+- **Backend**: Express.js, MongoDB, Mongoose, Bcrypt, JWT
+- **Payments**: Razorpay integration
+- **Email**: Nodemailer for notifications
 
-## Development
-- Frontend runs on port 5000
-- Start: `npm run start`
+## Running the Project
+Both workflows are configured and running:
+
+**Frontend** (Port 5000):
+```bash
+npm run start
+```
+
+**Backend** (Port 3001):
+```bash
+cd Server && npm start
+```
+
+## Configuration
+- Frontend API endpoint: `http://localhost:3001/` (in `src/environment/environment.ts`)
+- Backend database: MongoDB (configured in `Server/config/config.js`)
+- Firebase: Optional (disabled if service-account.json not present)
+
+## Deployment
 - Build: `npm run build`
-
-## Environment
-The frontend connects to an external API defined in `src/environment/environment.ts`
+- Output: `dist/enquiry-admin/browser`
