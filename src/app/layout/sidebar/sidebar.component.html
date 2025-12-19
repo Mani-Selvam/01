@@ -1,0 +1,8 @@
+<ul class="sidebar-nav">
+  <li [class.active]="isRouteActive('/dashboard')" (click)="customClick('/dashboard')">Dashboard</li>
+  <li [class.active]="isRouteActive('/users')" (click)="customClick('/users')">Users</li>
+  <li [class.active]="isRouteActive('/plans')" (click)="customClick('/plans')">Plans</li>
+  <li [class.active]="isRouteActive('/coupon')" (click)="customClick('/coupon')">Coupon</li>
+  <li [class.active]="isRouteActive('/ticket')" (click)="customClick('/ticket')">Tickets</li>
+  <li [class.active]="isRouteActive('/aboutcontent')" (click)="customClick('/aboutcontent')">About Us</li>
+</ul>

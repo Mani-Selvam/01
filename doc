@@ -1,0 +1,54 @@
+# Enquiry Management API
+
+## Overview
+This is a Node.js/Express backend API for an Enquiry Management system. It provides RESTful endpoints for managing enquiries, users, payments, tickets, and more.
+
+
+## Project Structure
+```
+├── config/           # Configuration files (database, app config, firebase)
+├── constant/         # Constants and response templates
+├── controller/       # Route controllers (business logic handlers)
+├── middleware/       # Express middleware (auth verification, routing)
+├── models/           # Mongoose data models
+├── router/           # Express route definitions
+├── services/         # Business logic services
+├── uploads/          # File upload directories
+└── index.js          # Application entry point
+```
+
+## Tech Stack
+- **Runtime**: Node.js 20
+- **Framework**: Express.js
+- **Database**: MongoDB (Atlas)
+- **Authentication**: JWT
+- **Payment**: Razorpay, CCAvenue
+- **Notifications**: Firebase Cloud Messaging, Twilio, SendGrid
+- **Email**: Nodemailer
+
+## API Endpoints
+- `/auth` - Authentication (login, register, OTP)
+- `/user` - User management
+- `/enquiry` - Enquiry CRUD operations
+- `/plan` - Subscription plans
+- `/followup` - Follow-up tracking
+- `/notification` - Push notifications
+- `/razorpay` - Payment processing
+- `/coupon` - Coupon management
+- `/ticket` - Support tickets
+- `/leadsource` - Lead source management
+- `/enquirystatus` - Enquiry status management
+
+## Running the Application
+The application runs on port 5000 and connects to MongoDB Atlas.
+
+## Environment
+- Development server: `node index.js`
+- Database: MongoDB Atlas (configured in config/config.js)
+
+## Recent Changes
+- 2024-12-19: Initial import and setup for Replit environment
+  - Updated server to bind to 0.0.0.0:5000
+  - Fixed Windows file paths to Linux paths
+  - Added health check endpoints (/ and /health)
+  - Created upload directories

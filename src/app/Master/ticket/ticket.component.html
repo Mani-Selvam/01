@@ -1,0 +1,191 @@
+<p-toast></p-toast>
+<div>
+ 
+    <div class="card">
+        <p-table #dt [resizableColumns]="true" columnResizeMode="expand" [value]="ticketList" [rows]="10"
+            [paginator]="true" 
+            [globalFilterFields]="['ticket_no','title', 'description','raised_date','ticket_status']"
+            [(selection)]="selectedTickets" [rowHover]="true" dataKey="id"
+            styleClass="p-datatable-gridlines p-datatable-sm p-datatable-responsive-demo p-setup-table"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="paginationvalue"
+            style="width: 100%;"  >
+            <ng-template pTemplate="caption" >
+                <div class="p-grid table-header"  >
+                    <div class="">
+                        <div>
+                            <h4 class="p-m-0">Manage Tickets</h4>
+                        </div>
+                    </div>
+                    <div class="search-bar-container">
+                        <span class="p-input-icon-left">
+                            <em class="pi pi-search"></em>
+                            <input type="text" pInputText (input)="dt.filterGlobal(
+                                   $any($event.target).value, 'contains')" style="height: 30px;padding-left: 2rem;" />
+                        </span>
+                    </div>
+                    <div class="exportBtnSet padding0">
+                        <div class="speedDial p-mr-2" [ngClass]="{'active': speedDial}">
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr class="table-cell" style="display: flex;">
+                    <th pResizableColumn id="sno" style="width: 3rem"></th>
+                    <th pResizableColumn id="ticket_no" pSortableColumn="ticket_no" style="text-align:center; width: 5%" >Ticket Number <!-- Adjust width -->
+                        <p-sortIcon field="ticket_no"></p-sortIcon>
+                    </th>
+                    <th pResizableColumn id="title" pSortableColumn="title" style="text-align:center;width: 10%" class="table-title"> <!-- Apply class -->
+                        Title<p-sortIcon field="title">
+                        </p-sortIcon>
+                    </th>
+                    <th pResizableColumn id="description" pSortableColumn="description" style="text-align:center;width: 12%" class="table-description"> <!-- Apply class -->
+                        Description<p-sortIcon field="description">
+                        </p-sortIcon>
+                    </th>
+                    <th pResizableColumn id="raised_date" pSortableColumn="raised_date"
+                        style="text-align:center; width: 5%;">Raised date <!-- Adjust width -->
+                        <p-sortIcon field="raised_date"></p-sortIcon>
+                    </th>
+                    <th pResizableColumn id="ticket_status" pSortableColumn="ticket_status"
+                        style="text-align:center; width: 5%;">Status <!-- Adjust width -->
+                        <p-sortIcon field="ticket_status"></p-sortIcon>
+                    </th>
+                    <th pResizableColumn id="Action" style="width: 5%; text-align:center;" rowspan="2">Action <!-- Adjust width -->
+                    </th>
+                </tr>
+                <tr style="display: flex;">
+                    <th pResizableColumn id="sno" style="width: 3rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th pResizableColumn id="ticket_no" style="width: 5% ;text-align: center;">
+                        <input pInputText type="text"
+                        (input)="dt.filter($any($event.target)?.value, 'ticket_no', 'contains')"
+                        [value]="$any(dt.filters['ticket_no'])?.value" placeholder="Search by Ticket No"
+                        class="p-column-filter">
+                    </th>
+                    <th pResizableColumn id="title" style="width: 10%;text-align: center"> <!-- Adjust width -->
+                        <input pInputText type="text"
+                        (input)="dt.filter($any($event.target)?.value, 'title', 'contains')"
+                        [value]="$any(dt.filters['title'])?.value" placeholder="Search by title"
+                        class="p-column-filter">
+                    </th>
+                    <th pResizableColumn id="description" style="width: 12%;text-align: center"> <!-- Adjust width -->
+                        <input pInputText type="text"
+                        (input)="dt.filter($any($event.target)?.value, 'description', 'contains')"
+                        [value]="$any(dt.filters['description'])?.value" placeholder="Search by description"
+                        class="p-column-filter">
+                    </th>
+                    <th pResizableColumn id="raised_date" style="width: 5%;text-align: center">
+                        <input pInputText type="text"
+                        (input)="dt.filter($any($event.target)?.value, 'raised_date', 'contains')"
+                        [value]="$any(dt.filters['raised_date'])?.value" placeholder="Search by Raised date"
+                        class="p-column-filter">
+                    </th>
+                    <th pResizableColumn id="ticket_status" style="width: 5%;text-align: center">
+                        <input pInputText type="text"
+                        (input)="dt.filter($any($event.target)?.value, 'ticket_status', 'contains')"
+                        [value]="$any(dt.filters['ticket_status'])?.value" placeholder="Search by Status"
+                        class="p-column-filter">
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-ticket>
+                <tr class="table-res" style="display: flex;">
+                    <td data-th="" style="padding-right: 0px !important;width: 3rem" class="checkboxe" >
+                        <p-tableCheckbox [value]="ticket"></p-tableCheckbox>
+                    </td>
+                    <td data-th="ticket_no" class="" style="padding: 0px 6px !important;width: 5%">
+                        {{ticket.ticket_no}} </td>
+                    <td data-th="title" class="" style="padding: 0px 6px !important;width:10%">
+                        {{ticket.ticket_title}}</td>
+                    <td data-th="description" style="padding: 0px 6px !important;width: 12%" >{{ticket.description}}</td>
+                    <td data-th="raised_date" style="padding: 0px 6px !important;width: 5%">{{ticket.raised_date}}</td>
+                    <td data-th="ticket_status" style="padding: 0px 6px !important;width: 5%">
+                        {{ticket.ticket_status}} </td>
+                    <td data-th="Action" style="width: 5%;">
+                        <button pButton pRipple icon="pi pi-microsoft" class="p-button-rounded p-button-warning p-mr-2"
+                            (click)="viewDetails(ticket)"></button>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                            (click)="editSelectedticket(ticket)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <p-dialog header="{{Form_name}}" [(visible)]="visible">
+        <div>
+            <form [formGroup]="ticketForm" (ngSubmit)="onSubmit(ticketForm)">
+
+
+                <label for="ticket_status">Ticket Status</label>
+                <select (change)="selectstatus($event)" class="form-control" formControlName="ticket_status">
+                  <option value="">None</option>
+                  <option *ngFor="let tic of ticketStatus" [value]="tic.value">{{ tic.label }}</option>
+                </select>
+
+
+                <label for="response">Ticket Reply</label>
+                <!-- <input id="response" type="text" formControlName="response" /> -->
+                <textarea id="response" rows="10" cols="50" name="comment" formControlName="response" >
+                    Enter reply here...</textarea>
+                <div *ngIf="ticketForm.get('response')?.touched && !ticketForm.get('response')">
+                    Ticket response is required.
+                </div>
+
+    
+                <button type="submit" [disabled]="ticketForm.invalid">Submit</button>
+            </form>
+        </div>
+    </p-dialog>
+
+    <p-dialog header="ticket Details" [(visible)]="visibleTicketDetails">
+        <div class="user-details-container">
+          <div class="user-detail-item">
+            <label>Ticket Number:</label>
+            <span>{{ selectedTicket?.ticket_no }}</span>
+          </div>
+          <div class="user-detail-item">
+            <label>Raised date:</label>
+            <span>{{ selectedTicket?.raised_date }}</span>
+          </div>
+          <div class="user-detail-item">
+            <label>Raised By:</label>
+            <span>{{ selectedTicket?.raised_by }}</span>
+          </div>
+          <div class="user-detail-item">
+            <label>Status:</label>
+            <span>{{ selectedTicket?.ticket_status }}</span>
+          </div>
+          <div class="user-detail-item">
+            <label>Ticket Title:</label>
+            <span>{{ selectedTicket?.ticket_title }}</span>
+          </div>
+          <div class="user-detail-item">
+            <label>Description:</label>
+            <span>{{ selectedTicket?.description }}</span>
+          </div>
+          <div class="user-detail-item" style="display: grid;">
+            <label>Sample image:</label>
+            <div>
+                <a [href]="selectedTicket?.ticket_image_url" target="_blank" rel="noopener noreferrer">
+                    <img class="image_class" [src]="selectedTicket?.ticket_image_url" alt="Ticket Image" style="width: 100%;">
+                </a>
+            </div>
+          </div>
+          <div class="user-detail-item">
+            <label>Reply:</label>
+            <span>{{ selectedTicket?.response }}</span>
+          </div>
+         
+          
+        
+         
+          <!-- Add more user details as needed -->
+    
+          <button pButton pRipple label="Close" class="p-button-secondary" (click)="visibleTicketDetails = false"></button>
+        </div>
+      </p-dialog>
+      <p-confirmDialog [style]="{width: '470px'}"></p-confirmDialog>  
+</div>

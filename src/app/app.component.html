@@ -1,0 +1,14 @@
+
+
+<div *ngIf="authService.isAuthenticated$ | async; else loggedOutLayout">
+  <app-header></app-header>
+  <div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <app-main>
+      <router-outlet></router-outlet>
+    </app-main>
+  </div>
+</div>
+
+<ng-template #loggedOutLayout>
+  <app-login></app-login> </ng-template>

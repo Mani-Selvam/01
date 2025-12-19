@@ -1,0 +1,156 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeicons/primeicons.css";
+@import "../node_modules/prismjs/themes/prism-coy.css";
+@import 'primeng/resources/themes/saga-blue/theme.css';
+@import 'primeng/resources/primeng.min.css';
+@import 'primeflex/primeflex.css';
+
+.ui-datepicker {
+  z-index: 1002 !important; /* Adjust the z-index as needed */
+}
+
+@media (min-width: 992px) {
+    .layout-wrapper.layout-horizontal .layout-sidebar {
+      top: 50px !important;
+    }
+  
+    .layout-wrapper.layout-topbar-mobile-active .layout-topbar .layout-topbar-wrapper .layout-topbar-right {
+      background: whitesmoke !important;
+    }
+  }
+  
+  .layout-wrapper.layout-topbar-mobile-active .layout-topbar .layout-topbar-wrapper .layout-topbar-right {
+      background: whitesmoke !important;
+    }
+  
+    .layout-topbar {
+      z-index: 997;
+    }
+  /* .layout-sidebar{
+    top: 50px;
+  }
+   */
+  .layout-wrapper.layout-horizontal .layout-sidebar {
+      top: 50px !important;
+  }
+  .layout-content-nopadding{
+    flex: 1 0 auto;
+    padding: 0px !important;
+  }
+  
+  .layout-content {
+    flex: 1 0 auto;
+    padding: 0px !important;
+  }
+  
+  .p-datatable-header ng-star-inserted{
+    padding: 0px !important;
+  }
+  
+  
+  
+  .p-button.p-button-icon-only.p-button-rounded {
+      border-radius: 50%;
+      width: 2.0rem;
+      height: 2.0rem;
+  }
+  
+  ::ng-deep .search-badge.status-Active {
+      background: #c8e6c9;
+      color: #256029;
+  }
+  ::ng-deep .search-badge.status-InActive {
+      background: #feedaf;
+      color: #8a5340;
+  }
+  
+  
+  ::ng-deep .search-badge {
+      border-radius: 2px;
+      padding: .25em .5rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .3px;
+  }
+  
+  .searchButtons {
+    float: right; 
+    width: 20%;
+  }
+  .clearfix:after {
+    content: " ";
+    display: block;
+    clear: both;
+  }
+  
+  .card {
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    background: #ffffff;
+    padding: 0px;
+    margin-bottom: 2rem;
+  }
+  .card:last-child {
+    margin-bottom: 0;
+  }
+  .card .card-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+  .p-orderlist .p-orderlist-controls{
+      display:none !important;
+  }
+  .card .card-subtitle {
+    color: #9199a9;
+    font-weight: 600;
+    margin: -1rem 0 1rem 0;
+  }
+  
+  .p-toast.p-toast-top-right, .p-toast.p-toast-top-left, .p-toast.p-toast-top-center {
+    top: 70px;
+  }
+  
+  /* Add your customizations of layout here */
+  
+  .p-inputtext.p-error, .p-inputtext.p-invalid, .p-inputtext.ng-dirty.ng-invalid {
+      border-bottom: 1px solid #dc3545 !important;
+  }
+  
+  
+  .layout-config.layout-config-active{
+    width: 100%;
+  }
+  
+  .p-sidebar-mask.p-component-overlay {
+        background: rgb(0 0 0 / 0%) !important;
+  }
+  
+  .pac-container{
+    z-index:9999 !important;
+  }
+  
+  .yellowButton{
+      background: #8c8c3b;
+      min-width: 150px;
+  }
+  
+  .greenButton{
+      background: #86a549;
+      min-width: 150px;
+  }
+  
+  .redButton{
+      background: red;
+      min-width: 150px;
+  }

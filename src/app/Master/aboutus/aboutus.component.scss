@@ -1,0 +1,64 @@
+/* Define styles for the form */
+form {
+    margin-bottom: 20px; /* Add some space below the form */
+  }
+  
+  /* Style the label */
+  label {
+    display: block; /* Make the label a block element */
+    margin-bottom: 5px; /* Add some space below the label */
+  }
+  
+  /* Style the textarea */
+  textarea {
+    width: 100%; /* Make the textarea take up 100% of its container */
+    padding: 10px; /* Add padding to the textarea */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 5px; /* Add border radius */
+  }
+  
+  /* Style the error message */
+  .error-message {
+    color: red; /* Set text color to red */
+    font-size: 14px; /* Set font size */
+    margin-top: 5px; /* Add some space above the error message */
+  }
+  
+  /* Style the submit button */
+  button[type="submit"] {
+    padding: 10px 20px; /* Add padding to the button */
+    background-color: #007bff; /* Set background color */
+    color: #fff; /* Set text color to white */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add border radius */
+    cursor: pointer; /* Change cursor to pointer on hover */
+  }
+  button[type="button"] {
+    padding: 5px 10px; /* Add padding to the button */
+    background-color: #068919; /* Set background color */
+    color: #fff; /* Set text color to white */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add border radius */
+    cursor: pointer; /* Change cursor to pointer on hover */
+  }
+  
+  /* Style the formatted content */
+  .formatted-content {
+    margin-top: 20px; /* Add some space above the formatted content */
+  }
+  
+  /* Define styles for the toast component */
+  p-toast {
+    position: fixed; /* Set position to fixed */
+    top: 20px; /* Position from the top */
+    right: 20px; /* Position from the right */
+  }
+  .label-container {
+    display: flex; /* Use Flexbox layout */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 10px; /* Add some space below the label and button */
+  }
+  
+  .label-container label {
+    margin-right: 10px; /* Add some space to the right of the label */
+  }

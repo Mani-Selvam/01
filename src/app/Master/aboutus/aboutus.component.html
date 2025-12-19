@@ -1,0 +1,20 @@
+<p-toast></p-toast>
+<div>
+    <form [formGroup]="contentForm" (ngSubmit)="onSubmit(contentForm)">
+        <div class="label-container">
+            <label for="content">AboutUs Content</label>
+            <button type="button" (click)="toggleEditMode()">Edit</button>
+        </div>
+       
+        <!-- Use ngModel to bind the textarea content to a variable -->
+        <textarea id="content" rows="20" cols="50" name="comment" formControlName="content" [(ngModel)]="content">
+            Enter text here...</textarea>
+        <div *ngIf="contentForm.get('content')?.touched && contentForm.get('content')?.errors?.required">
+            Content is required.
+        </div>
+        <button *ngIf="editMode" type="submit" [disabled]="contentForm.invalid && editmode">Submit</button>
+    </form>
+
+    <!-- Display the formatted content using innerHTML binding -->
+    <!-- <div [innerHTML]="content | safeHtml"></div> -->
+</div>

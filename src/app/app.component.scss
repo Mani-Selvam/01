@@ -1,0 +1,34 @@
+@import './layout/header/header.component.scss';
+@import './layout/sidebar/sidebar.component.scss';
+@import './layout/main/main.component.scss';
+
+
+  .container {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .wrapper {
+    flex-grow: 1;
+    display: flex;
+  }
+  
+  app-sidebar { /* Use the component selector for direct styling */
+    width: 13%;
+    background-color: #eee;
+    padding: 15px;
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+    border-right: 1px solid #ddd;
+  }
+  
+  app-main { /* Use the component selector for direct styling */
+    flex-grow: 1;
+    padding: 20px;
+  }
+  

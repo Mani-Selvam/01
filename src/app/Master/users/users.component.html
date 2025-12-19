@@ -1,0 +1,316 @@
+<p-toast></p-toast>
+<div>
+    <div class="card">
+        <p-table #dt [value]="userList" [resizableColumns]="true" columnResizeMode="expand" [rows]="10"
+            [paginator]="true" [columns]="cols"
+            [globalFilterFields]="['user_name','company_name','emailId','mobile_no','user_type']"
+            [(selection)]="selectedUsers" [rowHover]="true" dataKey="id"
+            styleClass="p-datatable-gridlines p-datatable-sm p-datatable-responsive-demo p-setup-table"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="paginationvalue">
+            <ng-template pTemplate="caption">
+                <div class="p-grid table-header">
+                    <div class="">
+                        <div>
+                            <h4 class="p-m-0">Manage Users</h4>
+                        </div>
+                        <!-- <div class="p-d-flex p-ai-center p-jc-between" >
+							Displaying 
+                            {{dt.totalRecords ? dt.totalRecords: 0 }} out of {{staffs ? staffs.length : 0 }}
+						staffs.
+						</div> -->
+                    </div>
+                    <div class="search-bar-container">
+                        <span class="p-input-icon-left">
+                            <em class="pi pi-search"></em>
+                            <input type="text" pInputText (input)="dt.filterGlobal(
+                                   $any($event.target).value, 'contains')" style="height: 30px;padding-left: 2rem;"  />
+                        </span>
+                        <!-- <span>
+                            <button type="button" label="" pButton pRipple icon="pi pi-refresh" (click)="clear(dt)"
+                                class="p-mr-2" pTooltip="Reset" tooltipPosition="bottom"></button>
+                        </span> -->
+                    </div>
+                    <div class="exportBtnSet padding0">
+                        <div class="speedDial p-mr-2" [ngClass]="{'active': speedDial}" style="margin-right: 10px;">
+
+                            <button type="button" pButton pRipple icon="pi pi-download" label=""
+								class="p-button-warning buttonWidth90" pTooltip="Export" tooltipPosition="bottom"
+								 (mouseenter)="speedDial = !speedDial"
+								(click)="exportExcel(selectedUsers,dt)"></button>
+                        </div>
+                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"
+                            pTooltip="New" tooltipPosition="bottom" (click)="openNew()"></button>
+
+                        <!-- <button pButton pRipple label="Notification" icon="pi pi-eye" class="p-button-success p-mr-2"
+							pTooltip="New" tooltipPosition="bottom" (click)="openNotofication()"></button> -->
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr class="table-cell">
+                    <th pResizableColumn id="sno" style="width: 3rem"></th>
+                    
+                    <!-- <th pResizableColumn id="createdAt" pSortableColumn="createdAt" style="text-align:center">Reg
+                        Date<p-sortIcon field="createdAt">
+                        </p-sortIcon>
+                    </th> -->
+                    <th pResizableColumn id="user_name" pSortableColumn="user_name" style="text-align:center">User
+                        Name<p-sortIcon field="user_name">
+                        </p-sortIcon>
+                    </th>
+                    <th pResizableColumn id="company_name" pSortableColumn="company_name" style="text-align:center">
+                        Company Name<p-sortIcon field="company_name">
+                        </p-sortIcon>
+                    </th>
+                    <th pResizableColumn id="emailId" pSortableColumn="emailId" style="text-align:center">
+                        Email<p-sortIcon field="emailId">
+                        </p-sortIcon>
+                    </th>
+                    <th pResizableColumn id="mobile_no" pSortableColumn="mobile_no"
+                        style="text-align:center; width: 12rem;">Mobile<p-sortIcon field="mobile_no"></p-sortIcon>
+                    </th>
+                    <th pResizableColumn id="user_type" pSortableColumn="user_type"
+                        style="text-align:center; width: 12rem;">UserType<p-sortIcon field="user_type"></p-sortIcon>
+                    </th>
+
+                    <th pResizableColumn id="Action" style="width: 8rem; text-align:center" rowspan="2">Action</th>
+                </tr>
+                <tr>
+                    <th pResizableColumn id="sno" style="width: 3rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    
+                    <!-- <th pResizableColumn id="createdAt">
+                        <input pInputText type="text"
+                            (input)="dt.filter($any($event.target)?.value, 'createdAt', 'contains')"
+                            [value]="$any(dt.filters['createdAt'])?.value" placeholder="Search by reg date"
+                            class="p-column-filter">
+
+                    </th> -->
+                    <th pResizableColumn id="user_name">
+                        <input pInputText type="text"
+                            (input)="dt.filter($any($event.target)?.value, 'user_name', 'contains')"
+                            [value]="$any(dt.filters['user_name'])?.value" placeholder="Search by User Name"
+                            class="p-column-filter">
+
+                    </th>
+                    <th pResizableColumn id="company_name">
+                        <input pInputText type="text"
+                            (input)="dt.filter($any($event.target)?.value, 'company_name', 'contains')"
+                            [value]="$any(dt.filters['company_name'])?.value" placeholder="Search by Company Name"
+                            class="p-column-filter">
+                    </th>
+                    <th pResizableColumn id="emailId">
+                        <input pInputText type="text"
+                            (input)="dt.filter($any($event.target)?.value, 'emailId', 'contains')"
+                            [value]="$any(dt.filters['emailId'])?.value" placeholder="Search by Email"
+                            class="p-column-filter">
+                    </th>
+                    <th pResizableColumn id="mobile_no" style="width: 12rem">
+                        <input pInputText type="text"
+                            (input)="dt.filter($any($event.target)?.value, 'mobile_no', 'contains')"
+                            [value]="$any(dt.filters['mobile_no'])?.value" placeholder="Search by Mobile"
+                            class="p-column-filter">
+                    </th>
+                    <th pResizableColumn id="user_type" style="width: 12rem">
+                        <input pInputText type="text"
+                            (input)="dt.filter($any($event.target)?.value, 'user_type', 'contains')"
+                            [value]="$any(dt.filters['user_type'])?.value" placeholder="Search by UserType"
+                            class="p-column-filter">
+                    </th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-staff>
+                <tr class="table-res">
+                    <td data-th="" style="padding-right: 0px !important;" class="checkboxe">
+                        <p-tableCheckbox [value]="staff"></p-tableCheckbox>
+                    </td>
+                    
+                    <!-- <td data-th="Reg Date" class="" style="padding: 0px 6px !important;">
+                        {{staff.createdAt}} </td> -->
+                    <td data-th="User Name" class="" style="padding: 0px 6px !important;">
+                        {{staff.user_name}} </td>
+                    <td data-th="Company Name" class="" style="padding: 0px 6px !important;">
+                        {{staff.company_name}}</td>
+                    <td data-th="Email" style="padding: 0px 6px !important;">{{staff.emailId}}</td>
+                    <td data-th="Mobile" style="padding: 0px 6px !important;">{{staff.mobile_no}}</td>
+                    <td data-th="UserType" style="padding: 0px 6px !important;">
+                        {{staff.user_type}} </td>
+                    <td data-th="Action">
+                        <button pButton pRipple icon="pi pi-microsoft" class="p-button-rounded p-button-warning p-mr-2"
+                            (click)="viewDetails(staff)"></button>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                            (click)="editSelectedStaff(staff)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger p-mr-2"
+                            (click)="deleteStaff(staff)" title="Delete">
+                        </button>
+
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <p-dialog header="{{Form_name}}" [(visible)]="visible">
+        <div>
+            <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)">
+                <label for="user_name">User Name</label>
+                <input id="user_name" type="text" formControlName="user_name" />
+                <small class="p-error" *ngIf="userForm.get('user_name')?.hasError('minlength') && 
+                userForm.get('user_name')?.touched">Username is required.</small>
+               
+
+                <label for="company_name">company Name</label>
+                <input id="company_name" type="text" formControlName="company_name" />
+                <small class="p-error" *ngIf="userForm.get('company_name')?.hasError('minlength')
+                 && userForm.get('company_name')?.touched">Company Name is required.</small>
+                
+                <label for="emailId">Email</label>
+                <input id="emailId" type="text" formControlName="emailId" />
+                <small class="p-error" *ngIf="userForm.get('emailId')?.hasError('email') && userForm.get('emailId')?.touched">
+                    Enter the correct email</small>
+                    
+                <label for="mobile_no">Mobile</label>
+                <input id="mobile_no" type="text" formControlName="mobile_no" />
+                <small class="p-error"  *ngIf="userForm.get('mobile_no')?.hasError('pattern') && userForm.get('mobile_no')?.touched">
+                    Enter the correct mbile number</small>
+               
+
+                <label for="password">Password</label>
+                <input id="password" type="text" formControlName="password" />
+                <small class="p-error"  *ngIf="userForm.get('password')?.hasError('minLength')  && userForm.get('password')?.touched">
+                   Password must be at least 4 characters.</small>
+             
+
+                <label for="user_type">User Type</label>
+                <input id="user_type" type="text" formControlName="user_type" />
+                <small class="p-error"  *ngIf="userForm.get('user_type')?.hasError('required') && userForm.get('user_type')?.touched">
+                    select user type.</small>
+               
+
+                <label for="gst_no">GST Number</label>
+                <input id="gst_no" type="text" formControlName="gst_no" />
+                
+
+                <!-- Similar code for other fields -->
+
+                <button type="submit" [disabled]="userForm.invalid">Submit</button>
+            </form>
+        </div>
+    </p-dialog>
+
+    <p-dialog header="User Details" [(visible)]="visibleUserDetails">
+        <div class="user-details-container">
+            <div class="user-detail-item">
+                <label>User Name:</label>
+                <span>{{ selectedUser?.user_name }}</span>
+            </div>
+            <div class="user-detail-item">
+                <label>Company Name:</label>
+                <span>{{ selectedUser?.company_name }}</span>
+            </div>
+            <div class="user-detail-item">
+                <label>Email:</label>
+                <span>{{ selectedUser?.emailId }}</span>
+            </div>
+            <div class="user-detail-item">
+                <label>Mobile:</label>
+                <span>{{ selectedUser?.mobile_no }}</span>
+            </div>
+            <div class="user-detail-item">
+                <label>User Type:</label>
+                <span>{{ selectedUser?.user_type }}</span>
+            </div>
+            <div class="user-detail-item" *ngIf="selectedUser?.user_type == 'Admin'">
+                <label>GST Number:</label>
+                <span>{{ selectedUser?.gst_no }}</span>
+            </div>
+            <div *ngIf="selectedUser?.orderId">
+                <div class="user-detail-item">
+                    <label>Current Plan:</label>
+                    <span>{{ selectedUser?.orderDetails?.planDetails?.planName }}</span>
+                </div>
+                <div class="user-detail-item">
+                    <label>Plan Validity Till:</label>
+                    <span>{{ selectedUser?.orderDetails?.validity | date: 'mediumDate' }}</span>
+                </div>
+                <div class="user-detail-item" *ngIf="selectedUser?.orderDetails?.couponName != ''">
+                    <label>Coupon :</label>
+                    <span>{{ selectedUser?.orderDetails?.couponName}}</span>
+                </div>
+                <div class="user-detail-item">
+                    <label>Plan Status:</label>
+                    <span *ngIf="selectedUser?.orderDetails?.Active; else inactiveText">Active</span>
+                    <ng-template #inactiveText>Inactive</ng-template>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                  <button pButton pRipple label="Manage Plan" class="p-button-primary"
+                          *ngIf="selectedUser?.orderDetails?.Active == true && selectedUser?.user_type == 'Admin'"
+                          (click)="Manageplan()">
+                  </button>
+                  <button pButton pRipple label="Add Plan" class="p-button-success"
+                          *ngIf="selectedUser?.orderDetails?.Active == false && selectedUser?.user_type == 'Admin'"
+                          (click)="Manageplan()">
+                  </button>
+                  <button pButton pRipple label="Add Plan" class="p-button-success"
+                  *ngIf="!selectedUser?.orderId && selectedUser?.user_type == 'Admin'"
+                  (click)="Manageplan()">
+          </button>
+                </div>
+                <div>
+                  <button pButton pRipple label="Close" class="p-button-secondary"
+                          (click)="visibleUserDetails = false">
+                  </button>
+                </div>
+              </div>
+         
+        </div>
+    </p-dialog>
+    <p-dialog header="Manage User Plan" [(visible)]="visiblePlanDetails">
+        <div class="user-details-container">
+            <div class="planselect">
+			<label class="required" for="input">Plan <span style="color: rgb(217, 0, 0);"> *</span> </label>
+          <select [(ngModel)]="selectedPlan" (change)="selectplan($event)" class="form-control" >
+            <option value="">Select Plan</option>
+            <option *ngFor="let plan of planList" [value]="plan._id">{{ plan.planName }}</option>
+          </select>
+        </div>
+
+          <div class="planselect">
+            <label class="required" for="input">Coupon</label>
+          <select [(ngModel)]="selectedCoupon" (change)="selectcoupon($event)" class="form-control" >
+            <option value="">None</option>
+            <option *ngFor="let coupon of couponList" [value]="coupon.couponName">{{ coupon.couponName }}</option>
+          </select>
+          </div>
+          
+
+
+          <div style="display: flex; justify-content: space-between;">
+            <div>
+                <button pButton pRipple label="Activate Plan" class="p-button-success"
+                        *ngIf="!selectedUser?.havePlan" (click)="ActivePlan()">
+                </button>
+                <button pButton pRipple label="Upgrade Plan" class="p-button-success"
+                *ngIf="selectedUser?.havePlan && selectedUser?.planId !== selectedPlan " (click)="ActivePlan()">
+        </button>
+                <button pButton pRipple label="Inactivate Plan" class="p-button-danger"
+                        *ngIf="selectedUser?.havePlan  && selectedUser?.planId == selectedPlan" (click)="InactivePlan()">
+                </button>
+              </div>
+
+            <div>
+              <button pButton pRipple label="Close" class="p-button-secondary"
+                      (click)="visiblePlanDetails = false">
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </p-dialog>
+    <p-confirmDialog [style]="{width: '470px'}"></p-confirmDialog>
+</div>

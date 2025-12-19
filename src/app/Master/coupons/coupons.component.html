@@ -1,0 +1,220 @@
+<p-toast></p-toast>
+<div>
+    <div class="card">
+        <p-table #dt [resizableColumns]="true" columnResizeMode="expand" [value]="couponList" [rows]="10"
+            [paginator]="true" [columns]="cols"
+            [globalFilterFields]="['couponName','from', 'to','discountAmount','totalPrice']"
+            [(selection)]="selectedCoupons" [rowHover]="true" dataKey="id"
+            styleClass="p-datatable-gridlines p-datatable-sm p-datatable-responsive-demo p-setup-table"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="paginationvalue">
+            <ng-template pTemplate="caption">
+                <div class="p-grid table-header">
+                    <div class="">
+                        <div>
+                            <h4 class="p-m-0">Manage Coupons</h4>
+                        </div>
+                        <!-- <div class="p-d-flex p-ai-center p-jc-between" >
+							Displaying 
+                            {{dt.totalRecords ? dt.totalRecords: 0 }} out of {{staffs ? staffs.length : 0 }}
+						staffs.
+						</div> -->
+                    </div>
+                    <div class="search-bar-container">
+                        <span class="p-input-icon-left">
+                            <em class="pi pi-search"></em>
+                            <input type="text" pInputText (input)="dt.filterGlobal(
+                                   $any($event.target).value, 'contains')" style="height: 30px;padding-left: 2rem;" />
+                        </span>
+                        <!-- <span>
+                            <button type="button" label="" pButton pRipple icon="pi pi-refresh" (click)="clear(dt)"
+                                class="p-mr-2" pTooltip="Reset" tooltipPosition="bottom"></button>
+                        </span> -->
+                    </div>
+                    <div class="exportBtnSet padding0">
+                        <div class="speedDial p-mr-2" [ngClass]="{'active': speedDial}">
+
+                            <!-- <button type="button" pButton pRipple icon="pi pi-download" label=""
+								class="p-button-warning buttonWidth90" pTooltip="Export" tooltipPosition="bottom"
+								*ngIf="exportdisplay" (mouseenter)="speedDial = !speedDial"
+								(click)="exportExcel(selectedStaffs,dt)"></button> -->
+                        </div>
+                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"
+                            pTooltip="New" tooltipPosition="bottom" (click)="openNew()"></button>
+
+                        <!-- <button pButton pRipple label="Notification" icon="pi pi-eye" class="p-button-success p-mr-2"
+							pTooltip="New" tooltipPosition="bottom" (click)="openNotofication()"></button> -->
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr class="table-cell">
+                    <th pResizableColumn id="sno" style="width: 3rem"></th>
+                    <th pResizableColumn id="couponName" pSortableColumn="couponName" style="text-align:center">Coupon
+                        Code<p-sortIcon field="couponName">
+                        </p-sortIcon>
+                    </th>
+                    <th pResizableColumn id="from" pSortableColumn="from" style="text-align:center">
+                       Valid From<p-sortIcon field="from">
+                        </p-sortIcon>
+                    </th>
+                    <th pResizableColumn id="to" pSortableColumn="to" style="text-align:center">
+                        Valid UpTo<p-sortIcon field="to">
+                        </p-sortIcon>
+                    </th>
+                    <th pResizableColumn id="discountAmount" pSortableColumn="discountAmount"
+                        style="text-align:center; width: 12rem;">Discount Price<p-sortIcon field="discountAmount"></p-sortIcon>
+                    </th>
+                    <th pResizableColumn id="discountPercentage" pSortableColumn="discountPercentage"
+                    style="text-align:center; width: 12rem;">Discount Percentage<p-sortIcon field="discountPercentage"></p-sortIcon>
+                </th>
+                    <th pResizableColumn id="Action" style="width: 8rem; text-align:center" rowspan="2">Action</th>
+                </tr>
+                <tr>
+					<th pResizableColumn  id="sno" style="width: 3rem">
+						<p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+					</th>
+					<th pResizableColumn  id="couponName">
+                            <input pInputText type="text"
+                            (input)="dt.filter($any($event.target)?.value, 'couponName', 'contains')"
+                            [value]="$any(dt.filters['couponName'])?.value" placeholder="Search by Coupon Name"
+                            class="p-column-filter">
+					</th>
+					<th pResizableColumn  id="from">
+                        <input pInputText type="text"
+                        (input)="dt.filter($any($event.target)?.value, 'from', 'contains')"
+                        [value]="$any(dt.filters['from'])?.value" placeholder="Search by From Date"
+                        class="p-column-filter">
+					</th>
+					<th pResizableColumn  id="to">
+                        <input pInputText type="text"
+                        (input)="dt.filter($any($event.target)?.value, 'to', 'contains')"
+                        [value]="$any(dt.filters['to'])?.value" placeholder="Search by To Date"
+                        class="p-column-filter">
+					</th>
+					<th pResizableColumn  id="discountAmount" style="width: 12rem">
+                        <input pInputText type="text"
+                        (input)="dt.filter($any($event.target)?.value, 'discountAmount', 'contains')"
+                        [value]="$any(dt.filters['discountAmount'])?.value" placeholder="Search by Discount"
+                        class="p-column-filter">
+					</th>
+                    <th pResizableColumn  id="discountPercentage" style="width: 12rem">
+                        <input pInputText type="text"
+                        (input)="dt.filter($any($event.target)?.value, 'discountPercentage', 'contains')"
+                        [value]="$any(dt.filters['discountPercentage'])?.value" placeholder="Search by Discount"
+                        class="p-column-filter">
+					</th>
+					
+				</tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-coupon>
+                <tr class="table-res">
+                    <td data-th="" style="padding-right: 0px !important;" class="checkboxe">
+                        <p-tableCheckbox [value]="coupon"></p-tableCheckbox>
+                    </td>
+                    <td data-th="Coupon Name" class="" style="padding: 0px 6px !important;">
+                        {{coupon.couponName}} </td>
+                    <td data-th="Valid From" class="" style="padding: 0px 6px !important;">
+                        {{coupon.from}}</td>
+                    <td data-th="Valid UpTo" style="padding: 0px 6px !important;">{{coupon.to}}</td>
+                    <td data-th="Discount Price" style="padding: 0px 6px !important;">{{coupon.discountAmount}}</td>
+                    <td data-th="Discount Price" style="padding: 0px 6px !important;">{{coupon.discountPercentage}} <span *ngIf="coupon.discountPercentage !==null">%</span></td>
+                    <td>
+                        <button pButton pRipple icon="pi pi-microsoft" class="p-button-rounded p-button-warning p-mr-2"
+                            (click)="viewDetails(coupon)"></button>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                            (click)="editSelectedCoupon(coupon)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger p-mr-2"
+                            (click)="deleteCoupon(coupon)" title="Delete">
+                        </button>
+
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <p-dialog  #dialog header="{{Form_name}}" [(visible)]="visible">
+        <div class="dialog-content">
+            <form [formGroup]="couponForm" (ngSubmit)="onSubmit(couponForm)">
+                <label>Coupon Code</label>
+                <input type="text" formControlName="couponName" />
+                <div *ngIf="couponForm.get('couponName')?.touched && !couponForm.get('couponName')">
+                  Coupon Name is required.
+                </div>
+              
+                <div>
+                    <label>Coupon Type   </label>
+                    <input type="radio" formControlName="discountType" value="price" (change)="onDiscountTypeChange()"> Price
+                    <input type="radio" formControlName="discountType" value="percentage" (change)="onDiscountTypeChange()"> Percentage
+                  </div>
+                
+                  <!-- Show/hide based on discountType -->
+                  <div *ngIf="discountType === 'price'">
+                    <label for="discountAmount"> Price </label>
+                    <input id="discountAmount" type="text" formControlName="discountAmount" style="width: 100%;" />
+                    <div *ngIf="couponForm.get('discountAmount')?.invalid && couponForm.get('discountAmount')?.touched">
+                      Price is required.
+                    </div>
+                  </div>
+                
+                  <div *ngIf="discountType === 'percentage'">
+                    <label for="discountPercentage">Discount Percentage (%) </label>
+                    <input id="discountPercentage" type="text" formControlName="discountPercentage" placeholder="Enter the value in digit. Eg: 10" style="width: 100%;" />
+                    <div *ngIf="couponForm.get('discountPercentage')?.invalid && couponForm.get('discountPercentage')?.touched">
+                      Percentage is required.
+                    </div>
+                  </div>
+              
+                <div class="date-range">
+                  <label>Valid From</label>
+                  <p-calendar formControlName="from" [showIcon]="true" dateFormat="dd-mm-yy" [appendTo]="dialogElement" (ngModelChange)="updateMinToDate()"></p-calendar>
+                  <label class="to-label">Valid Up To</label>
+                  <p-calendar formControlName="to" [showIcon]="true" dateFormat="dd-mm-yy" [appendTo]="dialogElement" [minDate]="minToDate"></p-calendar>
+                </div>
+              
+                <div *ngIf="couponForm.get('from')?.touched && !couponForm.get('from')">
+                  Valid From field is required.
+                </div>
+                <div *ngIf="couponForm.get('to')?.touched && !couponForm.get('to')">
+                  Validity Up To field is required.
+                </div>
+              
+                <button type="submit" [disabled]="couponForm.invalid || (couponForm.get('discountType')?.value === 'price' && couponForm.get('discountAmount')?.value == '') || (couponForm.get('discountType')?.value === 'percentage' && couponForm.get('discountPercentage')?.value == '')">Submit</button>
+              </form>
+        </div>
+      </p-dialog>
+    <p-dialog header="Coupon Details" [(visible)]="visibleCouponDetails" [style]="{ 'width': 'fit-content' }">
+        <div class="user-details-container">
+            <div class="user-detail-item">
+                <label>Coupon Name:</label>
+                <span>{{ selectedCoupon?.couponName }}</span>
+            </div>
+            <div class="user-detail-item">
+                <label>Valid From:</label>
+                <span>{{ selectedCoupon?.from }}</span>
+            </div>
+            <div class="user-detail-item">
+                <label>Validity UpTo:</label>
+                <span>{{ selectedCoupon?.to }}</span>
+            </div>
+            <div class="user-detail-item">
+                <label>Discount Type:</label>
+                <span>{{ selectedCoupon?.discountType }}</span>
+            </div>
+
+            <div class="user-detail-item">
+                <label>Discount Price:</label>
+                <span>{{ selectedCoupon?.discountAmount }}</span>
+            </div>
+            <div class="user-detail-item">
+                <label>Discount Percentage:</label>
+                <span>{{ selectedCoupon?.discountPercentage }}</span>
+            </div>
+            <!-- Add more user details as needed -->
+
+            <button pButton pRipple label="Close" class="p-button-secondary"
+                (click)="visibleCouponDetails = false"></button>
+        </div>
+    </p-dialog>
+    <p-confirmDialog [style]="{width: '470px'}"></p-confirmDialog>  
+</div>
