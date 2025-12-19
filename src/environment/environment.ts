@@ -1,5 +1,10 @@
 export const environment = {
-    apiRoot : '/api/', //Replit proxy
+    apiRoot : () => {
+      // Use relative path for API calls
+      // This will automatically use the same host/port as the frontend
+      return '/api/';
+    },
+    apiRootStr: '/api/', //Replit proxy
     paginatorValue:[10,25,50],
   }
 

@@ -30,7 +30,8 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<boolean> {
-    const loginUrl = `${environment.apiRoot}auth/login`;
+    const apiRoot = typeof environment.apiRoot === 'function' ? environment.apiRoot() : environment.apiRoot;
+    const loginUrl = `${apiRoot}auth/login`;
     const loginData = {
       email_mob: email,
       password: password
