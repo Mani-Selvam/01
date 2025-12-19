@@ -64,11 +64,35 @@ export class AuthService {
 
   logout(): void {
     const localStorage = this.document.defaultView?.localStorage;
-    if (localStorage) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('userId');
+    const userId = localStorage?.getItem('userId');
+    
+    if (userId) {
+      const apiRoot = typeof environment.apiRoot === 'function' ? environment.apiRoot() : environment.apiRoot;
+      const logoutUrl = `${apiRoot}auth/logout`;
+      
+      this.http.post<any>(logoutUrl, { id: JSON.parse(userId) }).subscribe(
+        () => {
+          if (localStorage) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
+          }
+          this.isAuthenticatedSubject.next(false);
+        },
+        () => {
+          if (localStorage) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
+          }
+          this.isAuthenticatedSubject.next(false);
+        }
+      );
+    } else {
+      if (localStorage) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+      }
+      this.isAuthenticatedSubject.next(false);
     }
-    this.isAuthenticatedSubject.next(false);
   }
 
   isAuthenticated(): boolean {
