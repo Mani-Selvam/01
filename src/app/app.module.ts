@@ -7,6 +7,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { MainComponent } from './layout/main/main.component';
 import { LoginComponent } from './Auth/login/login.component';
+import { RegisterComponent } from './Auth/register/register.component';
 import { DashboardComponent } from './Master/dashboard/dashboard.component';
 import { UsersComponent } from './Master/users/users.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -35,6 +36,7 @@ import { TicketComponent } from './Master/ticket/ticket.component';
     SidebarComponent,
     MainComponent,
     LoginComponent,
+    RegisterComponent,
     DashboardComponent,
     UsersComponent,
     PlanComponent,

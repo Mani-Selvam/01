@@ -57,3 +57,20 @@
     border-radius: 3px;
     cursor: pointer;
   }
+
+  .register-link {
+    text-align: center;
+    color: #666;
+    margin-top: 20px;
+    font-size: 0.95rem;
+
+    a {
+      font-weight: 600;
+      transition: color 0.2s;
+      cursor: pointer;
+
+      &:hover {
+        color: #667eea;
+      }
+    }
+  }

@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="left-side">
+    <img src="assets/neophron_logo.png" alt="Logo" class="logo">
+    <h1 style="margin-top: 0px; color: #555555;">Welcome to NeoGroww</h1>
+  </div>
+  <div class="right-side">
+    <h2>Create Account</h2>
+    
+    <div *ngIf="successMessage" class="alert success">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert error">{{ errorMessage }}</div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="user_name">Full Name:</label>
+        <input type="text" id="user_name" formControlName="user_name" 
+               [class.error]="registerForm.get('user_name')?.invalid && registerForm.get('user_name')?.touched">
+        <small *ngIf="registerForm.get('user_name')?.invalid && registerForm.get('user_name')?.touched" class="error-text">
+          Name must be at least 3 characters
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="company_name">Company Name:</label>
+        <input type="text" id="company_name" formControlName="company_name"
+               [class.error]="registerForm.get('company_name')?.invalid && registerForm.get('company_name')?.touched">
+        <small *ngIf="registerForm.get('company_name')?.invalid && registerForm.get('company_name')?.touched" class="error-text">
+          Company name is required
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="emailId">Email:</label>
+        <input type="email" id="emailId" formControlName="emailId"
+               [class.error]="registerForm.get('emailId')?.invalid && registerForm.get('emailId')?.touched">
+        <small *ngIf="registerForm.get('emailId')?.invalid && registerForm.get('emailId')?.touched" class="error-text">
+          Please enter a valid email
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="mobile_no">Mobile Number:</label>
+        <input type="tel" id="mobile_no" formControlName="mobile_no"
+               [class.error]="registerForm.get('mobile_no')?.invalid && registerForm.get('mobile_no')?.touched">
+        <small *ngIf="registerForm.get('mobile_no')?.invalid && registerForm.get('mobile_no')?.touched" class="error-text">
+          Please enter a valid 10-digit mobile number
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="gst_no">GST Number (Optional):</label>
+        <input type="text" id="gst_no" formControlName="gst_no">
+      </div>
+
+      <div class="form-group">
+        <label for="user_type">User Type:</label>
+        <select id="user_type" formControlName="user_type">
+          <option value="Staff">Staff</option>
+          <option value="Admin">Admin</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" formControlName="password"
+               [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+        <small *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-text">
+          Password must be at least 6 characters
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" formControlName="confirmPassword"
+               [class.error]="(registerForm.get('confirmPassword')?.invalid || registerForm.errors?.['passwordMismatch']) && registerForm.get('confirmPassword')?.touched">
+        <small *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched" class="error-text">
+          Passwords do not match
+        </small>
+      </div>
+
+      <button type="submit" [disabled]="!registerForm.valid || isLoading" class="submit-btn">
+        {{ isLoading ? 'Registering...' : 'Register' }}
+      </button>
+    </form>
+
+    <p class="login-link">
+      Already have an account? <a (click)="navigateToLogin()" style="cursor: pointer; color: #007bff;">Login here</a>
+    </p>
+  </div>
+</div>

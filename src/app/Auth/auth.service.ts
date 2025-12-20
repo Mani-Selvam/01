@@ -95,6 +95,25 @@ export class AuthService {
     }
   }
 
+  register(userData: any): Observable<any> {
+    const apiRoot = typeof environment.apiRoot === 'function' ? environment.apiRoot() : environment.apiRoot;
+    const registerUrl = `${apiRoot}auth/register`;
+
+    return this.http.post<any>(registerUrl, userData).pipe(
+      map(response => {
+        console.log("Registration response:", response);
+        if (response && response.data) {
+          return response.data;
+        }
+        return null;
+      }),
+      catchError(error => {
+        console.error("Registration error:", error);
+        return of(null);
+      })
+    );
+  }
+
   isAuthenticated(): boolean {
     const localStorage = this.document.defaultView?.localStorage;
   
