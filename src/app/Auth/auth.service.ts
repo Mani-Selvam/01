@@ -102,14 +102,16 @@ export class AuthService {
     return this.http.post<any>(registerUrl, userData).pipe(
       map(response => {
         console.log("Registration response:", response);
-        if (response && response.data) {
-          return response.data;
+        // Handle both response.data and response.statusCode.data formats
+        const responseData = response.data || (response.statusCode && response.statusCode.data);
+        if (responseData) {
+          return { success: true, data: responseData };
         }
-        return null;
+        return { success: false, data: null };
       }),
       catchError(error => {
         console.error("Registration error:", error);
-        return of(null);
+        return of({ success: false, data: null });
       })
     );
   }

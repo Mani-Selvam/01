@@ -64,21 +64,23 @@ export class RegisterComponent implements OnInit {
     };
 
     this.authService.register(registrationData).subscribe(
-      data => {
+      response => {
         this.isLoading = false;
-        if (data) {
+        console.log('Registration result:', response);
+        if (response && response.success) {
           this.successMessage = 'Registration successful! Redirecting to login...';
           setTimeout(() => {
             this.router.navigate(['/login']);
           }, 2000);
         } else {
-          this.errorMessage = 'Registration failed. Please try again.';
+          this.errorMessage = response?.error || 'Registration failed. Please try again.';
         }
       },
       error => {
         this.isLoading = false;
         console.error('Registration error:', error);
-        this.errorMessage = error?.error?.message || 'An error occurred during registration.';
+        const errorMsg = error?.error?.message || error?.error?.error || 'An error occurred during registration.';
+        this.errorMessage = errorMsg;
       }
     );
   }
