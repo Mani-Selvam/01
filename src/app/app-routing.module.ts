@@ -11,6 +11,7 @@ import { CouponsComponent } from './Master/coupons/coupons.component';
 import { AboutusComponent } from './Master/aboutus/aboutus.component';
 import { TicketComponent } from './Master/ticket/ticket.component';
 const routes: Routes = [
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'coupon', component: CouponsComponent, canActivate: [AuthGuard] },
   { path: 'aboutcontent', component: AboutusComponent, canActivate: [AuthGuard] },
   { path: 'ticket', component: TicketComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: '/login' }
 ];
 
 @NgModule({
